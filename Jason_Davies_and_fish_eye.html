@@ -20,20 +20,27 @@
 </style>
 
 <header>
-    <script src="//d3js.org/d3.v2.min.js" charset="utf-8"></script>
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="fisheye.js"></script>
 </header>
 <body>
-<object id="chart1" width="960" height="500" data="asset/wordcloud.svg" type="image/svg+xml" />
-<!--
-<svg id="chart1" width="960" height="500" href="asset/wordcloud.svg">
--->
+    <svg id="chart1" x="50" y="50" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+        
+    </svg>
 
-<script src="//d3js.org/d3.v2.min.js" charset="utf-8"></script>
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="js/fisheye.js"></script>
 <script>
 
-    var svg = d3.select("#chart1")
+    var svg = d3.select("body").append("div").append("svg")
+      .attr('viewBox','0 0 ' + width + ' ' +height)
+      .attr('preserveAspectRatio','xMidYMid meet')
+      .style("width", '98%')
+      .style("height", '98%')
+      .style("display", "block")
+      .style("xlink:href", "asset/wordcloud.svg")
+      .style("position", "absolute");
+
     svg.on("mousemove", function() {
       fisheye.focus(d3.mouse(this));
 

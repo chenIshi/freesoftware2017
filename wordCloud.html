@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="js/d3.layout.cloud.js"></script>
+
+<head>
+    <title>Word Cloud Example</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    var colorScale= d3.schemeCategory20b;
+    var count_i=0;
+    var count_j=1;
+
+    var layout = d3.layout.cloud()
+        .size([900, 500])
+        .words([
+            "Hello", "world", "normally", "you", "want", "more", "words","Hello", "world", "normally", "you", "want", "more", "words","Hello", "world", "normally", "you", "want", "more", "words","Hello", "world", "normally", "you", "want", "more", "words","Hello", "world", "normally", "you", "want", "more", "words","Hello", "world", "normally", "you", "want", "more", "words","Hello", "world", "normally", "you", "want", "more", "words",
+            "than", "this","ssss","Hello", "world", "normally", "you", "want", "more", "words","Hello", "world", "normally", "you", "want", "more", "words","Hello", "world", "normally", "you", "want", "more", "words","Hello", "world", "normally", "you", "want", "more", "words", 
+            "archimedean"].map(function (d) {
+                count_j++;
+                if (count_j>3){
+                    count_j=0;
+                    count_i++;
+                }
+                return { text: d, size: count_i + Math.random() *count_i*2};
+            }))
+        .padding(2)
+        .spiral("archimedean")
+        .rotate(function () { return (Math.random()) * 100; })
+        .font("Impact")
+        .fontSize(function (d) { return d.size; })
+        .on("end", draw);
+
+    layout.start();
+
+    function draw(words) {
+        d3.select("body").append("svg")
+            .attr("width", layout.size()[0])
+            .attr("height", layout.size()[1])
+            .append("g")
+            .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+            .selectAll("text")
+            .data(words)
+            .enter().append("text")
+            .style("font-size", function (d) { return d.size + "px"; })
+            .style("font-family", "Impact")
+            .style("fill", function (){ return colorScale[Math.floor(Math.random()*20)];})
+            .attr("text-anchor", "middle")
+            .attr("transform", function (d) {
+                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+            })
+            .text(function (d) { return d.text; });
+    }
+    
+</script>
+
+
+</html>
